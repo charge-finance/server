@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-charge-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234 # Root user password
+      MYSQL_DATABASE: charge_db         # Database name
+      MYSQL_USER: db_user              # Username
+      MYSQL_PASSWORD: skibidisigma     # User password
+    ports:
+      - "3306:3306"                    # Expose MySQL on port 3306
+    volumes:
+      - mysql_data:/var/lib/mysql      # Persist database data
+
+volumes:
+  mysql_data:
+    driver: local
