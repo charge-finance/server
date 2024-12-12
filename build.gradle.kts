@@ -20,16 +20,36 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot Starters
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // Jackson Kotlin Module
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    // Flyway for Database Migrations
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
+
+    // Kotlin Reflection
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    // JWT Support
+    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6") // for JSON parsing
+
+    // Development Tools
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // MySQL Connector
     runtimeOnly("com.mysql:mysql-connector-j")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // Testing Dependencies
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
