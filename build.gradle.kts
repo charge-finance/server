@@ -24,6 +24,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 
     // Jackson Kotlin Module
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -44,7 +45,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // MySQL Connector
-    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("mysql:mysql-connector-java:8.0.33") // Use the latest version
 
     // Testing Dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
