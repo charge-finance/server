@@ -1,7 +1,6 @@
 package io.mitja.chargeapi.controler
 
 import io.mitja.chargeapi.entity.CreateUser
-import io.mitja.chargeapi.entity.UpdateUser
 import io.mitja.chargeapi.entity.User
 import io.mitja.chargeapi.service.TokenService
 import io.mitja.chargeapi.service.UserService
@@ -13,10 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @RestController
 @RequestMapping("/auth")
@@ -25,7 +21,15 @@ class AuthController(private val userService: UserService, private val tokenServ
 
     private val passwordEncoder = BCryptPasswordEncoder()
 
-
+    @Operation(summary = "Log in to the application", description = "Log in using email and password to receive an authentication token.")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Login successful.",
+                content = [Content(mediaType = "application/json")]),
+            ApiResponse(responseCode = "400", description = "Invalid email or password.",
+                content = [Content(mediaType = "text/plain")])
+        ]
+    )
     @PostMapping("/login")
     fun login(@RequestParam email: String, @RequestParam password: String): ResponseEntity<Any> {
         val user = userService.getUserByEmail(email)
