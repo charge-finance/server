@@ -1,9 +1,11 @@
 # Charge API
 
 ## Overview
+
 This API is under development and will provide endpoints for the Charge Mobile App
 
 ## Getting Started
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/charge-finance/server.git
@@ -16,11 +18,13 @@ This API is under development and will provide endpoints for the Charge Mobile A
 3. Start building the API functionality.
 
 ## Current Status
+
 - Database schema has been defined.
 - Initial migration script `V1__createdb.sql` is ready.
 - Docker Compose setup for local development is available.
 
 ## Planned Features
+
 - User authentication and management
 - Budget creation and tracking
 - Categorization of transactions

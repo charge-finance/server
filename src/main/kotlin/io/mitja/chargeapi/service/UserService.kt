@@ -15,8 +15,14 @@ class UserService(
 
     private val passwordEncoder = BCryptPasswordEncoder()
 
-    fun getAllUsers(): List<User?> { return userRepository.findAll() }
-    fun getUserByEmail(email: String): User? { return userRepository.findByEmail(email) }
+    fun getAllUsers(): List<User?> {
+        return userRepository.findAll()
+    }
+
+    fun getUserByEmail(email: String): User? {
+        return userRepository.findByEmail(email)
+    }
+
     fun createNewUser(createUser: CreateUser): User {
 
         // Hash the password
@@ -31,7 +37,12 @@ class UserService(
         )
         // Save and return the saved User
         return userRepository.save(user)
-    }    fun deleteUser(id: Int) { userRepository.deleteById(id) }
+    }
+
+    fun deleteUser(id: Int) {
+        userRepository.deleteById(id)
+    }
+
     @Transactional
     fun updateUser(user: UpdateUser, id: Int): User? {
         val existingUser = userRepository.findById(id).orElseThrow {

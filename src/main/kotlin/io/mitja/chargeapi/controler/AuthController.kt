@@ -47,8 +47,10 @@ class AuthController(private val userService: UserService, private val tokenServ
     @Operation(summary = "Register a new user", description = "Register a new user by providing user details.")
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "201", description = "User created successfully.",
-                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]),
+            ApiResponse(
+                responseCode = "201", description = "User created successfully.",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]
+            ),
             ApiResponse(responseCode = "400", description = "Invalid input.")
         ]
     )

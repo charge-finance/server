@@ -1,9 +1,7 @@
 package io.mitja.chargeapi.controler
 
-import io.mitja.chargeapi.entity.CreateUser
 import io.mitja.chargeapi.entity.UpdateUser
 import io.mitja.chargeapi.entity.User
-import io.mitja.chargeapi.service.TokenService
 import io.mitja.chargeapi.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -28,8 +26,10 @@ class UserController(private val userService: UserService) {
     @Operation(summary = "Retrieve a user by email", description = "Fetch a user's details using their email address.")
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "User found successfully.",
-                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]),
+            ApiResponse(
+                responseCode = "200", description = "User found successfully.",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]
+            ),
             ApiResponse(responseCode = "404", description = "User not found.")
         ]
     )
@@ -46,17 +46,21 @@ class UserController(private val userService: UserService) {
     @Operation(summary = "Update a user", description = "Update an existing user's details using their ID.")
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "User updated successfully.",
-                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]),
+            ApiResponse(
+                responseCode = "200", description = "User updated successfully.",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]
+            ),
             ApiResponse(responseCode = "404", description = "User not found."),
             ApiResponse(responseCode = "400", description = "Invalid input.")
         ]
     )
     @PutMapping("/{id}")
     fun updateUser(
-        @RequestBody(description = "Updated details of the user", required = true, content = [
-            Content(mediaType = "application/json", schema = Schema(implementation = UpdateUser::class))
-        ]) updateUser: UpdateUser,
+        @RequestBody(
+            description = "Updated details of the user", required = true, content = [
+                Content(mediaType = "application/json", schema = Schema(implementation = UpdateUser::class))
+            ]
+        ) updateUser: UpdateUser,
         @PathVariable id: Int
     ): User? {
         return userService.updateUser(updateUser, id)
