@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 @SecurityRequirement(name = "bearerAuth")
 class AuthController(private val userService: UserService, private val tokenService: TokenService) {
 
@@ -48,7 +48,7 @@ class AuthController(private val userService: UserService, private val tokenServ
             ApiResponse(responseCode = "400", description = "Invalid input.")
         ]
     )
-    @PostMapping
+    @PostMapping("/register")
     fun registerNewUser(@RequestBody newUser: CreateUser): User? {
         return userService.createNewUser(newUser)
     }
