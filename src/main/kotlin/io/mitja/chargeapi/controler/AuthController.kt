@@ -1,7 +1,6 @@
 package io.mitja.chargeapi.controler
 
 import io.mitja.chargeapi.entity.CreateUser
-import io.mitja.chargeapi.entity.UpdateUser
 import io.mitja.chargeapi.entity.User
 import io.mitja.chargeapi.service.TokenService
 import io.mitja.chargeapi.service.UserService
@@ -13,10 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @RestController
 @RequestMapping("/auth")
@@ -43,8 +39,10 @@ class AuthController(private val userService: UserService, private val tokenServ
     @Operation(summary = "Register a new user", description = "Register a new user by providing user details.")
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "201", description = "User created successfully.",
-                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]),
+            ApiResponse(
+                responseCode = "201", description = "User created successfully.",
+                content = [Content(mediaType = "application/json", schema = Schema(implementation = User::class))]
+            ),
             ApiResponse(responseCode = "400", description = "Invalid input.")
         ]
     )

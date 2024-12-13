@@ -16,27 +16,20 @@ import org.springframework.web.filter.OncePerRequestFilter
 @Configuration
 class SecurityConfig(private val tokenService: TokenService) {
 
-        @Bean
-        fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-            http
-                .csrf { it.disable() }
-                .authorizeHttpRequests { auth ->
-                    auth
-                        .requestMatchers(
-                            "/auth/login",       // Login endpoint
-                            "/auth/register"             // Create user endpoint (assuming POST /user)
-                        ).permitAll()          // Allow access without authentication
-                        .requestMatchers(
-                            "/v3/api-docs/**", // Swagger documentation
-                            "/swagger-ui/**",
-                            "/swagger-ui.html"
-                        ).permitAll()          // Allow access to Swagger
-                        .anyRequest().authenticated() // Protect all other endpoints
-                }
-                .addFilterBefore(TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter::class.java)
+    @Bean
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .csrf { it.disable() }
+            .authorizeHttpRequests { auth ->
+                auth
+                    .requestMatchers(SecurityConstants.AUTH_URLS).permitAll() // Allow access without authentication
+                    .requestMatchers(*SecurityConstants.API_DOCUMENTATION_URLS).permitAll() // Allow access to Swagger
+                    .anyRequest().authenticated() // Protect all other endpoints
+            }
+            .addFilterBefore(TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter::class.java)
 
-            return http.build()
-        }
+        return http.build()
+    }
 
     class TokenAuthenticationFilter(private val tokenService: TokenService) : OncePerRequestFilter() {
         override fun doFilterInternal(
@@ -56,7 +49,7 @@ class SecurityConfig(private val tokenService: TokenService) {
         }
 
         private fun resolveToken(request: HttpServletRequest): String? {
-            val bearerToken = request.getHeader("Authorization")
+            val bearerToken = request.getHeader(SecurityConstants.AUTHORIZATION_HEADER_NAME)
             return if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
                 bearerToken.substring(7)
             } else null

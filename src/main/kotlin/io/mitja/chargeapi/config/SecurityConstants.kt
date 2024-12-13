@@ -1,8 +1,6 @@
 package io.mitja.chargeapi.config
 
 import io.jsonwebtoken.security.Keys
-import javax.crypto.spec.SecretKeySpec
-import java.nio.charset.StandardCharsets
 import javax.crypto.SecretKey
 
 object SecurityConstants {

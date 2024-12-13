@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.mitja.chargeapi.config.SecurityConstants
 import org.springframework.stereotype.Service
-import java.util.Date
+import java.util.*
 
 @Service
 class TokenService {
