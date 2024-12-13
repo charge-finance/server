@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth")
 @SecurityRequirement(name = "bearerAuth")
 class AuthController(private val userService: UserService, private val tokenService: TokenService) {
 
