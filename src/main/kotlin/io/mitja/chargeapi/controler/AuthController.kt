@@ -48,7 +48,7 @@ class AuthController(private val userService: UserService, private val tokenServ
             ApiResponse(responseCode = "400", description = "Invalid input.")
         ]
     )
-    @PostMapping
+    @PostMapping("/register")
     fun registerNewUser(@RequestBody newUser: CreateUser): User? {
         return userService.createNewUser(newUser)
     }
