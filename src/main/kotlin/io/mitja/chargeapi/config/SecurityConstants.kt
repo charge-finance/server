@@ -1,13 +1,14 @@
 package io.mitja.chargeapi.config
 
+import io.jsonwebtoken.security.Keys
 import javax.crypto.spec.SecretKeySpec
 import java.nio.charset.StandardCharsets
+import javax.crypto.SecretKey
 
 object SecurityConstants {
-    const val SECRET = "Secret Key to generate JWT's (min 256 Bits)"
-    const val ALGORITHM = "HmacSHA256"
-    val SECRET_KEY_SPEC = SecretKeySpec(SECRET.toByteArray(StandardCharsets.UTF_8), ALGORITHM)
-    const val EXPIRATION_TIME = 864_000_000L // 10 days
+    const val EXPIRATION_TIME = 3600000 // 1 hour in milliseconds
+    private const val SECRET = "your-256-bit-secret-your-256-bit-secret" // Replace with a secure random string
+    val SECRET_KEY_SPEC: SecretKey = Keys.hmacShaKeyFor(SECRET.toByteArray())
     const val AUTH_URLS = "/auth/*"
     val API_DOCUMENTATION_URLS = arrayOf(
         "/v3/api-docs/**",
