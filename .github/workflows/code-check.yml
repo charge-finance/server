@@ -1,16 +1,40 @@
-name: Build
+name: CI Build and Test
 
 on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        options: > 
+          --health-cmd="mysqladmin ping -h localhost --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        env:
+          MYSQL_ROOT_PASSWORD: 1234
+          MYSQL_DATABASE: charge_db
+          MYSQL_USER: db_user
+          MYSQL_PASSWORD: skibidisigma
+
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
+
     - name: Grant execute permission for Gradlew
       run: chmod +x ./gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+
+    - name: Run Tests
+      env:
+        SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/charge_db
+        SPRING_DATASOURCE_USERNAME: db_user
+        SPRING_DATASOURCE_PASSWORD: skibidisigma
+      run: ./gradlew test
